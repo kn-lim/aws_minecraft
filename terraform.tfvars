@@ -1,0 +1,12 @@
+name            = ""
+region          = ""
+private_key     = ""
+public_key      = ""
+ami             = ""
+instance_type   = ""
+route53_zone    = ""
+cname           = ""
+personal_ip     = ""
+personal_subnet = ""
+server_url      = ""
+java_max_memory = 
