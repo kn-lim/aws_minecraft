@@ -1,13 +1,11 @@
 variable "name" {
   description = "Name of the Minecraft instance"
   type        = string
-  default     = "aws-minecraft"
 }
 
 variable "region" {
   description = "Region of the Minecraft instance"
   type        = string
-  default     = "us-west-1"
 }
 
 variable "access_key" {
@@ -35,13 +33,11 @@ variable "public_key" {
 variable "ami" {
   description = "AMI of the Minecraft instance"
   type        = string
-  default     = "ami-0d5075a2643fdf738"
 }
 
 variable "instance_type" {
   description = "Instance type of the Minecraft instance"
   type        = string
-  default     = "t3.small"
 }
 
 variable "route53_zone" {
@@ -62,7 +58,6 @@ variable "server_url" {
 variable "java_max_memory" {
   description = "Max amount of memory to allocate"
   type        = string
-  default     = "2"
 }
 
 variable "personal_ip" {
