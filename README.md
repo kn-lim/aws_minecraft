@@ -7,7 +7,7 @@ Uses Terraform to create a Minecraft Server EC2 instance on AWS and adds a CNAME
 | Name      | Version  |
 | --------- | -------- |
 | terraform | >= 1.1.5 |
-| aws       | >= 3.74  |
+| aws       | >= 3.0  |
 
 You will also need to provide the [Minecraft Server JAR Download URL](https://www.minecraft.net/en-us/download/server).
 
