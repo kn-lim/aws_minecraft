@@ -7,11 +7,30 @@ Uses Terraform to create a Minecraft Server EC2 instance on AWS and adds a CNAME
 | Name      | Version  |
 | --------- | -------- |
 | terraform | >= 1.1.5 |
-| aws       | >= 3.0  |
+| aws       | >= 3.0   |
 
 You will also need to provide the [Minecraft Server JAR Download URL](https://www.minecraft.net/en-us/download/server).
 
 # Usage
+
+## Variables
+
+| Name            | Description                         |
+| --------------- | ----------------------------------- |
+| name            | Name of the Minecraft Server        |
+| region          | AWS Region                          |
+| private_key     | Path to Private Key                 |
+| public_key      | Path to Public Key                  |
+| ami             | AMI ID                              |
+| instance_type   | Instance Type                       |
+| route53_zone    | Route53 Zone                        |
+| cname           | CNAME of the Minecraft Server       |
+| personal_ip     | Personal IP to allow SSH Access     |
+| personal_subnet | Personal Subnet to allow SSH Access |
+| server_url      | URL to download Server JAR          |
+| java_max_memory | Max Amount of Memory to Allocate    |
+
+## Running
 
 1. Create the following environment variables using the following commands and add in your AWS credentials:
 
