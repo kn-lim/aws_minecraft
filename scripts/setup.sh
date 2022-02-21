@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install any updates pending for the AMI
+sudo yum update -y
+
 # Download and Install Amazon Corretto 17
 sudo yum install java-17-amazon-corretto-headless -y
 
