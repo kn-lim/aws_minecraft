@@ -9,4 +9,4 @@ cname           = ""
 personal_ip     = ""
 personal_subnet = ""
 server_url      = ""
-java_max_memory = 
+java_max_memory = ""
