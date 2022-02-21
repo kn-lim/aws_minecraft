@@ -13,5 +13,5 @@ wget $1
 echo "eula=true" > eula.txt
 
 # Create run.sh
-echo -e "#!/bin/bash\njava -Xmx$2G -Xms512M -jar server.jar --nogui" > run.sh
+echo -e "#!/bin/bash\njava -Xmx1024M -Xms1024M -jar server.jar nogui" > run.sh
 chmod +x run.sh
