@@ -41,8 +41,8 @@ module "minecraft" {
   name            = "minecraft"
   instance_type   = "t2.small"
   server_url      = ""
-  java_max_memory = 1024
+  java_max_memory = "1024"
   personal_ip     = ""
-  personal_subnet = 32
+  personal_subnet = "32"
 }
 ```
