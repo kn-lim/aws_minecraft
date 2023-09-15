@@ -1,6 +1,8 @@
 # terraform-aws-minecraft
 
-Terraform module to create a Minecraft Server EC2 instance on AWS
+Terraform module to create a Minecraft Server EC2 instance on AWS.
+
+The module adds a startup script to automatically launch the Minecraft server whenever the EC2 instance is turned on.
 
 ## Requirements
 
@@ -25,3 +27,20 @@ You will also need to provide the [Minecraft Server JAR Download URL](https://ww
 | `java_max_memory` | Max amount of memory to allocate (MB) | `1024` |
 | `personal_ip` | Your Personal IP Address |
 | `personal_subnet` | Your Personal Subnet | `32` |
+
+## Example Terraform File
+
+```js
+module "minecraft" {
+  source = "github.com/kn-lim/terraform-aws-minecraft"
+
+  region          = "us-west-2"
+  key_pair_name   = "minecraft"
+  name            = "minecraft"
+  instance_type   = "t2.small"
+  server_url      = ""
+  java_max_memory = 1024
+  personal_ip     = ""
+  personal_subnet = "32"
+}
+```
