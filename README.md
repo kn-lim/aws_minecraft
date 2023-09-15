@@ -43,6 +43,6 @@ module "minecraft" {
   server_url      = ""
   java_max_memory = 1024
   personal_ip     = ""
-  personal_subnet = "32"
+  personal_subnet = 32
 }
 ```
