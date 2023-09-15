@@ -1,53 +1,23 @@
-variable "name" {
-  description = "Name of the Minecraft instance"
-  type        = string
-}
-
 variable "region" {
   description = "Region of the Minecraft instance"
   type        = string
 }
 
-variable "access_key" {
-  description = "AWS Access Key"
-  type        = string
-  sensitive   = true
-}
-
-variable "secret_key" {
-  description = "AWS Secret Key"
-  type        = string
-  sensitive   = true
-}
-
-variable "private_key" {
-  description = "Private Key Path for SSH"
+variable "key_pair_name" {
+  description = "Name of the Key Pair for the Minecraft instance"
   type        = string
 }
 
-variable "public_key" {
-  description = "Public Key Path for SSH"
+variable "name" {
+  description = "Name of the Minecraft instance"
   type        = string
-}
-
-variable "ami" {
-  description = "AMI of the Minecraft instance"
-  type        = string
+  default     = "minecraft"
 }
 
 variable "instance_type" {
   description = "Instance type of the Minecraft instance"
   type        = string
-}
-
-variable "route53_zone" {
-  description = "Route53 Zone to add CNAME Record"
-  type        = string
-}
-
-variable "cname" {
-  description = "CNAME of the Minecraft EC2 instance to add to Route53"
-  type        = string
+  default     = "t2.small"
 }
 
 variable "server_url" {
@@ -56,8 +26,9 @@ variable "server_url" {
 }
 
 variable "java_max_memory" {
-  description = "Max amount of memory to allocate"
+  description = "Max amount of memory to allocate (MB)"
   type        = string
+  default     = "1024"
 }
 
 variable "personal_ip" {
@@ -68,4 +39,5 @@ variable "personal_ip" {
 variable "personal_subnet" {
   description = "Your Personal Subnet"
   type        = string
+  default     = "32"
 }

@@ -1,59 +1,68 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
+data "aws_ami" "amazon_linux" {
+  owners      = ["amazon"]
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
   }
 }
 
-provider "aws" {
-  region = var.region
+data "aws_key_pair" "minecraft_key_pair" {
+  key_name           = var.key_pair_name
+  include_public_key = true
 }
 
-resource "aws_key_pair" "minecraft_key_pair" {
-  key_name   = "${var.name}-key"
-  public_key = file("${var.public_key}")
-}
-
-resource "aws_instance" "minecraft_ec2" {
-  tags = {
-    Name = var.name
-  }
-
-  ami             = var.ami
+resource "aws_instance" "minecraft_instance" {
+  ami             = data.aws_ami.amazon_linux.id
   instance_type   = var.instance_type
-  key_name        = aws_key_pair.minecraft_key_pair.key_name
+  key_name        = data.aws_key_pair.minecraft_key_pair.key_name
   security_groups = [aws_security_group.minecraft_sg.name]
 
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("${var.private_key}")
-  }
+  user_data = <<-EOF
+  #!/bin/bash
+  sudo yum update
+  sudo yum install -y tmux java-17-amazon-corretto-headless
+  if [ ! -f "server.jar" ]; then
+    wget ${var.server_url} -O server.jar
+    echo "eula=true" > eula.txt
+    echo -e "#!/bin/bash\njava -Xmx${var.java_max_memory}M -Xms${var.java_max_memory}M -jar server.jar nogui" > start.sh
+    chmod +x start.sh
+  fi
+  tmux new-session -d -s minecraft "./start.sh"
+  EOF
 
-  provisioner "file" {
-    source      = "scripts/setup.sh"
-    destination = "/tmp/setup.sh"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/setup.sh",
-      "/tmp/setup.sh ${var.server_url} ${var.java_max_memory}"
-    ]
+  tags = {
+    Name = "tf-${var.name}"
   }
 }
 
-data "aws_route53_zone" "minecraft_zone" {
-  name = var.route53_zone
-}
+resource "aws_security_group" "minecraft_sg" {
+  name        = "${var.name}-sg"
+  description = "Allows SSH and Minecraft Access"
 
-resource "aws_route53_record" "minecraft_record" {
-  name    = var.cname
-  zone_id = data.aws_route53_zone.minecraft_zone.zone_id
-  type    = "CNAME"
-  ttl     = "300"
-  records = [aws_instance.minecraft_ec2.public_ip]
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${var.personal_ip}/${var.personal_subnet}"]
+  }
+
+  ingress {
+    from_port   = 25565
+    to_port     = 25565
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tf-${var.name}-sg"
+  }
 }
