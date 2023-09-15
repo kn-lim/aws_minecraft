@@ -34,7 +34,7 @@ You will also need to provide the [Minecraft Server JAR Download URL](https://ww
 
 ```js
 module "minecraft" {
-  source = "kn-lim/terraform-aws-minecraft"
+  source = "kn-lim/minecraft/aws"
 
   region          = "us-west-2"
   key_pair_name   = "minecraft"
