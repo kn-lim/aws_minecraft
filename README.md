@@ -1,6 +1,6 @@
 # terraform-aws-minecraft
 
-Terraform module to create a Minecraft Server EC2 instance on AWS.
+Terraform module to create a Minecraft Server on AWS.
 
 The module adds a startup script to automatically launch the Minecraft server whenever the EC2 instance is turned on.
 
